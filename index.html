@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Maryam 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffb3c6, #fff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 2;
+}
+
+h2 { color: #ff3366; }
+
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#yes { background: #ff3366; color: white; }
+#no { background: #ccc; position: absolute; }
+
+.heart {
+  position: absolute;
+  color: #ff3366;
+  font-size: 20px;
+  animation: float 6s linear forwards;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-700px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="page1">
+  <h2>Maryam 💖</h2>
+  <p>You already know the answer 😌</p>
+  <p>Will you be my Valentine?</p>
+  <button id="yes">YES</button>
+  <button id="no">NO</button>
+</div>
+
+<div class="card" id="page2" style="display:none;">
+  <h2>Maryam said YES 💖🥹</h2>
+  <p>Screenshot this 😌</p>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+
+// NO button runs
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.left = Math.random() * 200 + "px";
+  noBtn.style.top = Math.random() * 200 + "px";
+});
+
+// Floating hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.bottom = "0px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
+
+// Heart explosion
+function explodeHearts() {
+  for (let i = 0; i < 25; i++) {
+    const h = document.createElement("div");
+    h.innerHTML = "💖";
+    h.style.position = "absolute";
+    h.style.left = "50%";
+    h.style.top = "50%";
+    h.style.fontSize = "24px";
+    document.body.appendChild(h);
+
+    const angle = Math.random() * 360;
+    const distance = Math.random() * 300;
+
+    h.animate([
+      { transform: "translate(-50%, -50%)" },
+      { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`, opacity: 0 }
+    ], { duration: 1200 });
+
+    setTimeout(() => h.remove(), 1200);
+  }
+}
+
+// YES click
+yesBtn.onclick = () => {
+  if (navigator.vibrate) navigator.vibrate(200);
+  explodeHearts();
+  setTimeout(() => {
+    page1.style.display = "none";
+    page2.style.display = "block";
+  }, 700);
+};
+</script>
+
+</body>
+</html>
